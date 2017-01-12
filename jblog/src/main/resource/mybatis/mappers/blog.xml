@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="blog">
+	<select id="selectList" resultType="blogvo">
+		<!-- Contents Data -->
+ 		<![CDATA[
+			select no,
+				user_id,
+				title,
+				img
+			from blog
+		]]>
+	</select>
+	
+	<select id="selectById" resultType="blogvo" parameterType="string">
+		<![CDATA[
+			select no, 
+				user_id, 
+				title,
+				img
+			from blog
+			where user_id=#{user_id}
+		]]>
+	</select>
+	
+	<insert id="insert" parameterType="blogvo">
+		<![CDATA[
+			insert into blog
+			values(null, #{user_id}, #{title} , '/jblog/assets/images/spring-logo.jpg')
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			select
+			last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<update id="update" parameterType="blogvo">
+		<![CDATA[
+			update blog set title=#{title}, img=#{img} where no=#{no}
+		]]>
+	</update>
+</mapper>

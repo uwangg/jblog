@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="category">
+	<select id="selectList" parameterType="long" resultType="categoryvo">
+		<!-- Contents Data -->
+ 		<![CDATA[
+			select no,
+				blog_no,
+				name,
+				description,
+				posting
+			from category where blog_no=#{blog_no}
+		]]>
+	</select>
+	
+	<select id="selectCat" parameterType="long" resultType="categoryvo">
+		<!-- Contents Data -->
+ 		<![CDATA[
+			select no,
+				blog_no,
+				name,
+				description,
+				posting
+			from category where no=#{no}
+		]]>
+	</select>
+	
+	<insert id="insert" parameterType="categoryvo">
+		<![CDATA[
+			insert into category
+			values(null, #{blog_no}, #{name}, #{description}, 0)
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<update id="update" parameterType="categoryvo">
+		<![CDATA[
+			update category set posting=#{posting} where no=#{no}
+		]]>
+	</update>
+	
+	<delete id="delete" parameterType="long">
+		<![CDATA[
+			delete
+			from category
+			where no=#{no}
+		]]>
+	</delete>
+</mapper>
